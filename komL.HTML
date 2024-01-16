@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bright Life.com</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+        crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+        }
+
+        .navbar {
+            background-color: #007bff;
+        }
+
+        .navbar-brand {
+            color: #fff;
+            font-weight: bold;
+        }
+
+        .navbar-nav .nav-link {
+            color: #fff !important;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: #fff !important;
+        }
+
+        .slideshow-container {
+            max-width: 1000px;
+            height: 400px;
+            margin: auto;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .slideshow-image {
+            width: 100%;
+            height: auto;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .fade-in {
+            opacity: 1 !important;
+        }
+
+        hr {
+            margin: 2rem 0;
+            border: 2px solid #007bff;
+        }
+
+        h1 {
+            color: #007bff;
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        fieldset {
+            border: 2px solid #007bff;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        h4 {
+            color: #007bff;
+        }
+
+        ol {
+            margin-left: 2rem;
+        }
+
+        .chart-container {
+            max-width: 600px;
+            margin: 20px auto;
+        }
+
+        footer {
+            background-color: #007bff;
+            color: #fff;
+            padding: 20px 0;
+        }
+
+        footer a {
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Bright Life.com</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="aboutus.html">About us</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">Get involved</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Action</a></li>
+                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="education.html">Education scheme</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="regis_page.html">Register now</a>
+                    </li>
+                </ul>
+                <form class="d-flex" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <div class="slideshow-container">
+
+        <img class="slideshow-image fade-in" src="cute.jpg" alt="Poverty Image 1">
+        <img class="slideshow-image" src="ras.jpg" alt="Poverty Image 2">
+        <img class="slideshow-image" src="hapy.jpg" alt="Poverty Image 3">
+    </div>
+
+    <hr>
+    <h1>Why poverty?</h1>
+    <fieldset>
+        <h4>Poverty is a complex and multifaceted phenomenon with various interconnected causes. It is important
+            to note that the reasons for poverty can vary across different regions, countries, and communities.
+            Some common factors contributing to poverty include:</h4>
+        <ol>
+            <li>Lack of Education</li>
+            <li>Unemployment</li>
+            <li>Low Wages</li>
+            <li>Health Issues</li>
+        </ol>
+    </fieldset>
+    <hr>
+
+    <p><b>In our website, we are providing facilities to children who are unable to study due to a lack of
+            resources. We also aim to raise funds to provide food to those in need.</b></p>
+    <hr>
+    <h1 align="middle">Poverty Graph representation</h1>
+
+    <!-- Bar Chart -->
+    <div class="chart-container">
+        <canvas id="barChart"></canvas>
+    </div>
+
+    <!-- Pie Chart -->
+    <div class="chart-container">
+        <canvas id="pieChart"></canvas>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+
+    <script>
+        var barChartData = {
+            labels: ['others', '14-18years', '10-14years', '6-10years'],
+            datasets: [{
+                label: 'Poverty Rates by Region',
+                backgroundColor: 'rgba(0, 123, 255, 0.5)',
+                borderColor: 'rgba(0, 123, 255, 1)',
+                borderWidth: 1,
+                data: [10, 20, 15, 25]
+            }]
+        };
+
+        var pieChartData = {
+            labels: ['Education', 'Unemployment', 'Low Wages', 'Health Issues'],
+            datasets: [{
+                data: [30, 20, 25, 25],
+                backgroundColor: ['#007bff', '#28a745', '#ffc107', '#dc3545']
+            }]
+        };
+
+        var ctxBar = document.getElementById('barChart').getContext('2d');
+        var myBarChart = new Chart(ctxBar, {
+            type: 'bar',
+            data: barChartData,
+            options: {
+                responsive: true,
+                scales: {
+                    x: {
+                        grid: {
+                            display: false
+                        }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        max: 30
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        });
+
+        var ctxPie = document.getElementById('pieChart').getContext('2d');
+        var myPieChart = new Chart(ctxPie, {
+            type: 'pie',
+            data: pieChartData,
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'right'
+                    }
+                }
+            }
+        });
+
+        // JavaScript for controlling the slideshow
+        var currentImageIndex = 0;
+        var images = document.querySelectorAll('.slideshow-image');
+
+        function showNextImage() {
+            images[currentImageIndex].classList.remove('fade-in');
+            currentImageIndex = (currentImageIndex + 1) % images.length;
+            images[currentImageIndex].classList.add('fade-in');
+            setTimeout(showNextImage, 3000); // Change slide every 3 seconds
+        }
+
+        showNextImage();
+    </script>
+    <hr>
+
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h4>Contact Us</h4>
+                    <p>Email: kaushalluvit@gmail.com</p>
+                    <p>Phone: +91 8882930400</p>
+                </div>
+                <div class="col-md-4">
+                    <h4>Follow Us</h4>
+                    <p>Stay connected with us on social media:</p>
+                    <a href="#">Instagram</a>
+                </div>
+                <div class="col-md-4">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Get Involved</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>
